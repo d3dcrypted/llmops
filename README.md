@@ -16,5 +16,8 @@ The baseline scorer is deliberately simple and deterministic. Model-graded metri
 - [x] deterministic exact-match and token-overlap scores
 - [ ] provider adapters
 - [ ] cached responses
-- [ ] regression thresholds and CI artifact
+- [x] regression thresholds
+- [ ] CI artifact
 - [ ] RAG faithfulness/context metrics
+
+`evaluate_cases()` produces deterministic per-case and aggregate metrics. `regression_passes()` evaluates explicit minimum thresholds. No model, provider, or network call is required.
