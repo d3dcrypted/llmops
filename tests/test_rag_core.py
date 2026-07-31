@@ -26,6 +26,13 @@ class RagCoreTests(unittest.TestCase):
             with self.assertRaises(ValueError): ingest_file(root, "../outside.md")
             with self.assertRaises(ValueError): ingest_file(root, "large.md", max_bytes=5)
 
+    def test_ingestion_rejects_symlink(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "target.md").write_text("safe", encoding="utf-8")
+            (root / "link.md").symlink_to(root / "target.md")
+            with self.assertRaises(ValueError): ingest_file(root, "link.md")
+
     def test_citations_are_source_and_chunk_verifiable(self):
         chunks = chunk_text("guide.md", "python deployment metrics", 10, 0)
         citations = retrieve_with_citations("metrics", chunks)
