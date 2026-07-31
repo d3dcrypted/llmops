@@ -9,6 +9,7 @@ class EvaluationTests(unittest.TestCase):
 
     def test_evaluate_cases_returns_aggregate_metrics(self):
         results = evaluate_cases([Case("a", "yes", "yes"), Case("b", "blue sky", "blue ocean")])
+        self.assertEqual(results["schema_version"], 1)
         self.assertEqual(results["case_count"], 2)
         self.assertEqual(results["exact_match_rate"], 0.5)
         self.assertEqual(results["mean_token_overlap"], 0.75)

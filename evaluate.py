@@ -21,6 +21,7 @@ def evaluate_cases(cases: list[Case]) -> dict:
     if not count:
         raise ValueError("at least one case is required")
     return {
+        "schema_version": 1,
         "case_count": count,
         "exact_match_rate": round(sum(r["exact_match"] for r in results) / count, 4),
         "mean_token_overlap": round(sum(r["token_overlap"] for r in results) / count, 4),
