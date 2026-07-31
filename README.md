@@ -12,6 +12,10 @@ A small, transparent retrieval-augmented generation reference implementation. Th
 - [ ] faithfulness and context-precision evaluation
 - [ ] REST API and container deployment
 
+## Security baseline
+
+`ingest_file()` reads one explicitly selected UTF-8 file below an operator-provided root. Traversal, symlink targets, non-files, and oversized inputs are rejected. `retrieve_with_citations()` returns the source, chunk index, and exact retrieved text so citations can be verified without trusting generated prose.
+
 ## Run
 
 ```bash
