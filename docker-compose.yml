@@ -1,0 +1,37 @@
+services:
+  llama-server:
+    image: ghcr.io/ggerganov/llama.cpp:server
+    command: >
+      -m /models/model.gguf
+      --host 0.0.0.0
+      --port 8001
+      -c 4096
+      --threads 6
+      --parallel 2
+      --metrics
+    ports:
+      - "127.0.0.1:8001:8001"
+    volumes:
+      - ${MODEL_PATH:-./models}:/models:ro
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:12.1.1
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: change-me-before-use
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+
+volumes:
+  grafana-data:
