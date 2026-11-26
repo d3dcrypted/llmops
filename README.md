@@ -1,6 +1,6 @@
-# LLMOps Reference Stack
+# LLMOps Building Blocks
 
-Five small reference projects for the LLMOps lifecycle, in one tree. They were
+Five small demos of LLMOps building blocks, in one tree. They were
 published as separate repositories and are merged here, history included, so the
 pieces can be read together, tested by one pipeline and versioned as a set.
 
