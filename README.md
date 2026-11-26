@@ -8,7 +8,7 @@ A lightweight starting point for repeatable evaluation of prompts, models, and r
 python3 -m unittest discover -s tests -v
 ```
 
-The baseline scorer is deliberately simple and deterministic. Model-graded metrics, lm-evaluation-harness, Promptfoo, and experiment tracking are planned adapters—not hidden requirements.
+The baseline scorer is deliberately simple and deterministic. Model-graded metrics, lm-evaluation-harness, Promptfoo, and experiment tracking are planned adapters, not hidden requirements.
 
 ## Roadmap
 
@@ -21,3 +21,7 @@ The baseline scorer is deliberately simple and deterministic. Model-graded metri
 - [ ] RAG faithfulness/context metrics
 
 `evaluate_cases()` produces deterministic per-case and aggregate metrics. `regression_passes()` evaluates explicit minimum thresholds. No model, provider, or network call is required.
+
+## Authorship
+
+Human thought, machine hand. The author set the direction, took the decisions and reviewed the result; an AI assistant produced the drafting, the code and the prose in this file. Mistakes are the author's.
