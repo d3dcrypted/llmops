@@ -4,9 +4,9 @@ A practical control-plane scaffold for safer LLM applications. It treats securit
 
 ## Roadmap
 
-- [x] deterministic baseline policy checks
-- [x] minimal PII redaction example
-- [x] structured decision record
+- [x] deterministic baseline policy checks, English and Italian phrasings
+- [x] PII redaction for email, IBAN, phone and key-shaped secrets
+- [x] append-only decision log (input hash, never the input)
 - [ ] prompt-injection evaluation corpus
 - [ ] provider-independent guardrail adapters
 - [ ] retention and access-control reference

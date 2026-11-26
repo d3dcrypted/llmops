@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 CREDENTIAL = re.compile(r"^\s*[A-Z0-9_]*(?:PASSWORD|SECRET|TOKEN|API_KEY)[A-Z0-9_]*\s*[:=]\s*(\S*)\s*$")
+IMAGE = re.compile(r"^\s*image:\s*(\S+)\s*$")
 
 
 class LayoutTests(unittest.TestCase):
@@ -10,6 +11,18 @@ class LayoutTests(unittest.TestCase):
         root = Path(__file__).parents[1]
         for name in ("docker-compose.yml", "prometheus.yml"):
             self.assertTrue((root / name).is_file())
+
+    def test_every_image_is_pinned_to_a_tag_or_digest(self):
+        """A floating reference makes the demo unreproducible; upstream tag renames break it silently."""
+        root = Path(__file__).parents[1]
+        for number, line in enumerate((root / "docker-compose.yml").read_text(encoding="utf-8").splitlines(), 1):
+            match = IMAGE.match(line)
+            if not match:
+                continue
+            reference = match.group(1)
+            self.assertNotIn(":latest", reference, f"docker-compose.yml:{number} uses a floating tag")
+            self.assertTrue(":" in reference.rsplit("/", 1)[-1] or "@sha256:" in reference,
+                            f"docker-compose.yml:{number} has no tag or digest")
 
     def test_no_committed_credential_values(self):
         """A credential line may name a variable or reference the environment, never hold a value."""

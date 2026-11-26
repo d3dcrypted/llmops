@@ -6,7 +6,7 @@ A small, transparent retrieval-augmented generation reference implementation. Th
 
 - [x] deterministic text chunking
 - [x] source metadata and citation objects
-- [x] dependency-free baseline retriever
+- [x] dependency-free IDF-weighted baseline retriever
 - [ ] embedding-backed retrieval
 - [ ] generation adapter
 - [ ] faithfulness and context-precision evaluation

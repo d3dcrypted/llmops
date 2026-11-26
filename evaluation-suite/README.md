@@ -13,7 +13,7 @@ The baseline scorer is deliberately simple and deterministic. Model-graded metri
 ## Roadmap
 
 - [x] evaluation case schema
-- [x] deterministic exact-match and token-overlap scores
+- [x] deterministic exact-match and token precision/recall/F1 scores
 - [ ] provider adapters
 - [ ] cached responses
 - [x] regression thresholds

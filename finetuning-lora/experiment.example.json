@@ -1,0 +1,8 @@
+{
+  "base_model": "synthetic-base-7b",
+  "rank": 16,
+  "alpha": 32,
+  "dropout": 0.05,
+  "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"],
+  "quantize_4bit": true
+}

@@ -66,3 +66,19 @@ is a plan, only decisions already in force.
 - **Why:** the suite is meant to be read and reused by strangers. The
   contribution boundary is stated in `GOVERNANCE.md` and enforced by review.
 - **Rejected:** committing a case set extracted from production traffic.
+
+## 8. Precision and recall, not token presence
+
+- **Decided by:** Human, after an external review.
+- **Choice:** `token_scores()` reports precision, recall and F1 over token sets;
+  `mean_token_f1` is the aggregate and the regression gate.
+- **Why:** the old `token_overlap` was recall in disguise: the expected word
+  appearing anywhere scored 1.0, so "No, it is not Paris, it is Lyon" passed a
+  `min_token_overlap=1.0` gate. A metric that gives full marks to a wrong answer
+  is worse than no metric, because it gets trusted.
+- **Rejected:** keeping the name and raising the threshold. The number was
+  saturated, not mis-tuned.
+- **Still out of scope:** negation and paraphrase. A lexical metric cannot see
+  them. `exact_match` stays the honest signal for short factual answers, and the
+  semantic layer is on the roadmap.
+

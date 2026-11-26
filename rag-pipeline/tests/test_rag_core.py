@@ -13,6 +13,17 @@ class RagCoreTests(unittest.TestCase):
         chunks = chunk_text("a.md", "python deployment metrics", 10, 0)
         self.assertEqual(lexical_retrieve("metrics", chunks)[0].source, "a.md")
 
+    def test_retrieval_ignores_trailing_punctuation(self):
+        chunks = chunk_text("guide.md", "python deployment metrics.", 10, 0)
+        self.assertEqual([c.text for c in lexical_retrieve("metrics", chunks)],
+                         ["python deployment metrics."])
+
+    def test_common_terms_do_not_outrank_the_query_subject(self):
+        chunks = (chunk_text("a.md", "the the the", 10, 0)
+                  + chunk_text("b.md", "deployment guide", 10, 0)
+                  + chunk_text("c.md", "the handbook", 10, 0))
+        self.assertEqual(lexical_retrieve("the deployment", chunks)[0].source, "b.md")
+
     def test_ingestion_accepts_explicit_relative_file(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

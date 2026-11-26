@@ -6,6 +6,7 @@ A provider-neutral scaffold for documenting and benchmarking parameter-efficient
 
 - [x] dataset manifest and validation contract
 - [x] experiment configuration example
+- [x] LoRA/QLoRA parameter accounting (trainable parameters, scaling, adapter share)
 - [ ] Transformers + PEFT training adapter
 - [ ] quantized inference benchmark
 - [ ] loss and resource report

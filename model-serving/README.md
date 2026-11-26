@@ -24,7 +24,11 @@ The intended dashboard tracks time to first token, generation latency, throughpu
 
 ## Production notes
 
-The compose file is a local demo, not a production deployment. Add authentication, TLS, resource limits, pinned image digests, non-default credentials, persistent dashboards, and network policy before exposing it beyond a trusted host.
+The compose file is a local demo, not a production deployment. Images are pinned
+by tag and digest (upstream publishes only `full-<sha>` and `light-<sha>` tags for
+`llama.cpp`, so a floating tag does not resolve at all). Add authentication, TLS,
+resource limits, non-default credentials, persistent dashboards, and network
+policy before exposing it beyond a trusted host.
 
 ## Authorship
 

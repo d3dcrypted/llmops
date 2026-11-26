@@ -64,3 +64,16 @@ is a plan, only decisions already in force.
 - **Why:** the deployment is meant to be copied by strangers. The contribution
   boundary is stated in `GOVERNANCE.md` and enforced by review.
 - **Rejected:** committing a compose file tuned to one host.
+
+## 7. Images pinned by tag and digest
+
+- **Decided by:** Human, after an external review.
+- **Choice:** every image reference carries a tag and a digest, including
+  `llama.cpp`, pinned to `full-<sha>@sha256:...`.
+- **Why:** the reference was `ghcr.io/ggerganov/llama.cpp:server`, and upstream
+  publishes only `full-<sha>` and `light-<sha>` tags. The file did not merely
+  float, it did not resolve: `docker compose up` could never have worked. A digest
+  makes the demo reproducible and a tag rename a deliberate edit.
+- **Rejected:** `:latest`, and a floating tag with a comment asking operators to
+  pin it themselves.
+

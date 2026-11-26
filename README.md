@@ -12,11 +12,11 @@ provider-neutral: interfaces first, adapters later.
 
 | Project | Need it addresses | What you get |
 | --- | --- | --- |
-| [`rag-pipeline/`](rag-pipeline) | Answers over your own documents with no way to check where they came from | Deterministic ingestion, chunking and retrieval that return citations: source, chunk index and the exact retrieved text. Ingest rejects traversal, symlink targets, non-files and oversized input |
-| [`evaluation-suite/`](evaluation-suite) | A prompt, model or retrieval change ships with no repeatable way to know whether quality moved | A provider-neutral case format, deterministic exact-match and token-overlap scores, explicit regression thresholds, machine-readable results suitable for CI |
-| [`model-serving/`](model-serving) | A local model served behind an opaque endpoint, with no metrics | An OpenAI-compatible endpoint with Prometheus metrics and Grafana wiring, bound to loopback by default, plus an explicit list of what production would still require |
-| [`finetuning-lora/`](finetuning-lora) | Fine-tuning experiments that cannot be reproduced or compared | A dataset manifest and validation contract plus an experiment configuration example; training data stays external, only manifests, checksums and licences are committed |
-| [`security-governance/`](security-governance) | LLM features that reach users with no input classification, policy, redaction or audit trail | Deterministic policy checks, a minimal PII redaction example and a structured decision record that never stores raw secrets |
+| [`rag-pipeline/`](rag-pipeline) | Answers over your own documents with no way to check where they came from | Deterministic ingestion, chunking and IDF-weighted retrieval that return citations: source, chunk index and the exact retrieved text. Ingest rejects traversal, symlink targets, non-files and oversized input |
+| [`evaluation-suite/`](evaluation-suite) | A prompt, model or retrieval change ships with no repeatable way to know whether quality moved | A provider-neutral case format, deterministic exact-match and token precision/recall/F1 scores, explicit regression thresholds, machine-readable results suitable for CI |
+| [`model-serving/`](model-serving) | A local model served behind an opaque endpoint, with no metrics | An OpenAI-compatible endpoint with Prometheus metrics and Grafana wiring, bound to loopback by default, images pinned by tag and digest, plus an explicit list of what production would still require |
+| [`finetuning-lora/`](finetuning-lora) | Fine-tuning experiments that cannot be reproduced or compared | A dataset manifest and validation contract, a LoRA/QLoRA plan that computes trainable parameters, and example configuration files; training data stays external, only manifests, checksums and licences are committed |
+| [`security-governance/`](security-governance) | LLM features that reach users with no input classification, policy, redaction or audit trail | Deterministic policy checks in English and Italian, PII redaction for email, IBAN, phone and key-shaped strings, and an append-only decision log that stores a hash of the input instead of the input |
 
 ## How the pieces fit
 

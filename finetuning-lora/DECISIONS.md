@@ -67,3 +67,18 @@ is a plan, only decisions already in force.
 - **Why:** the scaffold is meant to be read and reused by strangers. The
   contribution boundary is stated in `GOVERNANCE.md` and enforced by review.
 - **Rejected:** committing a manifest that names internal systems.
+
+## 8. Parameter accounting is part of the contract
+
+- **Decided by:** Human, after an external review.
+- **Choice:** `LoraPlan` validates rank, alpha, dropout and target modules,
+  `adapter_parameters()` computes `rank * (in_features + out_features)` per
+  targeted linear layer, and `plan_summary()` reports base parameters, adapter
+  parameters and the adapter's share of the total.
+- **Why:** the manifest contract validated a checksum by length alone, so 64
+  characters of anything passed, and the configuration existed only as prose. The
+  number that decides whether an experiment is feasible is arithmetic: it belongs
+  in a tested function, not in a sentence.
+- **Rejected:** shipping a training adapter to prove the point. It needs GPU
+  dependencies and is already on the roadmap; the contract has to be right first.
+

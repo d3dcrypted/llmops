@@ -1,5 +1,6 @@
 """Dependency-free RAG building blocks for an inspectable baseline."""
 from dataclasses import dataclass
+import math
 from pathlib import Path
 import re
 
@@ -34,10 +35,33 @@ def chunk_text(source: str, text: str, size: int = 500, overlap: int = 50) -> li
     return [Chunk(source, i // step, " ".join(words[i:i + size]))
             for i in range(0, len(words), step) if words[i:i + size]]
 
+def _tokens(text: str) -> list[str]:
+    """One tokenizer for queries and chunks, so trailing punctuation cannot break a match."""
+    return re.findall(r"\w+", text.lower())
+
 def lexical_retrieve(query: str, chunks: list[Chunk], top_k: int = 3) -> list[Chunk]:
-    terms = set(re.findall(r"\w+", query.lower()))
-    scored = [(sum(t in c.text.lower().split() for t in terms), c) for c in chunks]
-    return [c for score, c in sorted(scored, key=lambda x: (-x[0], x[1].index))[:top_k] if score]
+    """Rank chunks by inverse-document-frequency weighted term match.
+
+    Weighting is the point: an unweighted count makes a word that appears in every
+    chunk worth as much as the term the query is actually about.
+    """
+    if top_k <= 0:
+        raise ValueError("top_k must be positive")
+    terms = set(_tokens(query))
+    if not terms:
+        return []
+    document_terms = [set(_tokens(chunk.text)) for chunk in chunks]
+    total = len(chunks)
+    scored = []
+    for chunk, words in zip(chunks, document_terms):
+        matched = terms & words
+        if not matched:
+            continue
+        score = sum(math.log(1 + total / sum(term in other for other in document_terms))
+                    for term in matched)
+        scored.append((-score, chunk.source, chunk.index, chunk))
+    scored.sort(key=lambda row: row[:3])
+    return [row[3] for row in scored[:top_k]]
 
 def retrieve_with_citations(query: str, chunks: list[Chunk], top_k: int = 3) -> list[dict]:
     """Return retrieved text plus stable source coordinates for verification."""

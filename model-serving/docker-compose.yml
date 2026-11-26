@@ -1,6 +1,8 @@
 services:
   llama-server:
-    image: ghcr.io/ggerganov/llama.cpp:server
+    # Pinned by tag and digest. Upstream publishes only full-<sha> and light-<sha>
+    # tags, so a floating tag here is not just unreproducible, it does not resolve.
+    image: ghcr.io/ggerganov/llama.cpp:full-1e5a6d088d0f3a967c6e86298a756daec9e8df12@sha256:7195b11d90b4c3258ec0c34256395dffbf4d29c296b586913afa216ef1b0e96b
     command: >
       -m /models/model.gguf
       --host 0.0.0.0

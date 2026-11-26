@@ -73,3 +73,16 @@ is a plan, only decisions already in force.
   should not be able to learn who runs it or where. The contribution boundary is
   stated in `GOVERNANCE.md` and enforced by review.
 - **Rejected:** committing a sample corpus from a real environment.
+
+## 8. Weighted retrieval, one tokenizer for both sides
+
+- **Decided by:** Human, after an external review found both defects in the baseline.
+- **Choice:** `lexical_retrieve()` tokenises query and chunk with the same `\w+`
+  pattern and scores a matched term as `log(1 + N / df)`.
+- **Why:** two silent failures. A chunk ending in "metrics." never matched the
+  query "metrics", and an unweighted term count let a word present in every chunk
+  outrank the term the query is about. Both return a plausible-looking wrong
+  chunk, which is the one failure mode a reference implementation cannot carry.
+- **Rejected:** keeping the count and documenting it as a known limitation. The
+  limitation was invisible from the outside.
+

@@ -68,3 +68,23 @@ is a plan, only decisions already in force.
   security example must not itself leak who runs it. The contribution boundary is
   stated in `GOVERNANCE.md` and enforced by review.
 - **Rejected:** sample inputs taken from a real mailbox or ticket queue.
+
+## 8. Named patterns, two languages, and a log that stores hashes
+
+- **Decided by:** Human, after an external review.
+- **Choice:** every pattern has a name (`instruction_override`,
+  `prompt_exfiltration_it`, `jailbreak_framing`, ...), redaction covers email,
+  IBAN, phone and key-shaped strings, and `AuditLog` appends one JSONL row per
+  decision holding the input's SHA-256, the reasons and the verdict.
+- **Why:** the baseline recognised one English phrasing and one PII shape, so
+  "Disregard all prior instructions", the same request in Italian, a phone number
+  and an IBAN all passed untouched. A control that covers a single example of
+  each class documents intent without drawing a boundary. The log turns the
+  "auditable decision" claim in the README into something checkable, and storing
+  a hash keeps the record from becoming a second copy of the data it protects.
+- **Rejected:** an LLM classifier for the same job (not deterministic, not
+  reviewable), and logging the raw input.
+- **Accepted cost:** over-redaction. A nine-digit number that is not a phone
+  number is masked anyway; a false positive costs a masked value, a false
+  negative leaks one.
+
