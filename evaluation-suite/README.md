@@ -22,6 +22,14 @@ The baseline scorer is deliberately simple and deterministic. Model-graded metri
 
 `evaluate_cases()` produces deterministic per-case and aggregate metrics. `regression_passes()` evaluates explicit minimum thresholds. No model, provider, or network call is required.
 
+## Limits
+
+The metrics compare sets of tokens. Word order, repetition and meaning are not
+measured: "the backup is not encrypted" against "the backup is encrypted" scores
+F1 0.89. Use the numbers to catch drift between runs of the same prompt, and do not
+read them as correctness. `tests/test_evaluate.py::test_negation_is_not_detected`
+keeps that case on record.
+
 ## Authorship
 
 Human thought, machine hand. The author set the direction, took the decisions and reviewed the result; an AI assistant produced the drafting, the code and the prose in this file. Mistakes are the author's.

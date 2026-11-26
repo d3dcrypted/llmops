@@ -1,5 +1,5 @@
 import unittest
-from evaluate import Case, evaluate_cases, regression_passes, score
+from evaluate import Case, evaluate_cases, regression_passes, score, token_scores
 
 class EvaluationTests(unittest.TestCase):
     def test_exact_match(self):
@@ -16,6 +16,11 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(score(wrong)["token_recall"], 1.0)
         self.assertLess(score(wrong)["token_f1"], 0.5)
         self.assertFalse(regression_passes(evaluate_cases([wrong])))
+
+    def test_negation_is_not_detected(self):
+        """Known limit of token overlap, kept executable: an answer that says the opposite scores high."""
+        scores = token_scores("the backup is not encrypted", "the backup is encrypted")
+        self.assertGreater(scores["f1"], 0.85)
 
     def test_evaluate_cases_returns_aggregate_metrics(self):
         results = evaluate_cases([Case("a", "yes", "yes"), Case("b", "blue sky", "blue ocean")])

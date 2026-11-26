@@ -47,8 +47,8 @@ class LoraPlan:
     def validate(self) -> None:
         if not self.base_model:
             raise ValueError("base_model is required")
-        if self.rank < 1 or self.alpha < 1:
-            raise ValueError("rank and alpha must be >= 1")
+        if type(self.rank) is not int or self.rank < 1 or self.alpha < 1:
+            raise ValueError("rank must be an integer >= 1 and alpha >= 1")
         if not 0.0 <= self.dropout < 1.0:
             raise ValueError("dropout must be in [0, 1)")
         if not self.target_modules:
@@ -59,8 +59,11 @@ class LoraPlan:
 def adapter_parameters(plan: LoraPlan, layers: tuple[tuple[str, int, int], ...]) -> int:
     """Trainable parameters: rank * (in_features + out_features) per targeted linear layer."""
     plan.validate()
-    return sum(plan.rank * (in_features + out_features)
-               for name, in_features, out_features in layers if name in plan.target_modules)
+    targeted = [layer for layer in layers if layer[0] in plan.target_modules]
+    if any(plan.rank > min(i, o) for _, i, o in targeted):
+        # Above min(in, out) the adapter is no longer low-rank: it has more parameters than the layer.
+        raise ValueError("rank exceeds the smallest dimension of a targeted layer")
+    return sum(plan.rank * (i + o) for _, i, o in targeted)
 
 def plan_summary(plan: LoraPlan, layers: tuple[tuple[str, int, int], ...]) -> dict:
     """The numbers an experiment record needs before anyone books GPU hours."""

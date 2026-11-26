@@ -12,8 +12,8 @@ class LayoutTests(unittest.TestCase):
         for name in ("docker-compose.yml", "prometheus.yml"):
             self.assertTrue((root / name).is_file())
 
-    def test_every_image_is_pinned_to_a_tag_or_digest(self):
-        """A floating reference makes the demo unreproducible; upstream tag renames break it silently."""
+    def test_every_image_is_pinned_to_a_tag_and_digest(self):
+        """Static check only: it proves the reference is pinned, not that the image runs."""
         root = Path(__file__).parents[1]
         for number, line in enumerate((root / "docker-compose.yml").read_text(encoding="utf-8").splitlines(), 1):
             match = IMAGE.match(line)
@@ -21,8 +21,8 @@ class LayoutTests(unittest.TestCase):
                 continue
             reference = match.group(1)
             self.assertNotIn(":latest", reference, f"docker-compose.yml:{number} uses a floating tag")
-            self.assertTrue(":" in reference.rsplit("/", 1)[-1] or "@sha256:" in reference,
-                            f"docker-compose.yml:{number} has no tag or digest")
+            self.assertRegex(reference, r":[\w.-]+@sha256:[0-9a-f]{64}$",
+                             f"docker-compose.yml:{number} is not pinned by tag and digest")
 
     def test_no_committed_credential_values(self):
         """A credential line may name a variable or reference the environment, never hold a value."""

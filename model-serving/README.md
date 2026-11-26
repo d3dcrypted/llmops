@@ -20,13 +20,15 @@ The API is bound to loopback by default. Prometheus is exposed on `127.0.0.1:909
 
 ## Metrics
 
-The intended dashboard tracks time to first token, generation latency, throughput, queue depth, and error rate. The exact metric names depend on the selected server image.
+No dashboard ships with this repository. The intended one tracks time to first token, generation latency, throughput, queue depth, and error rate. The exact metric names depend on the selected server image.
 
 ## Production notes
 
 The compose file is a local demo, not a production deployment. Images are pinned
-by tag and digest (upstream publishes only `full-<sha>` and `light-<sha>` tags for
-`llama.cpp`, so a floating tag does not resolve at all). Add authentication, TLS,
+by tag and digest, `llama.cpp` to a `server-b<build>` image whose entrypoint is
+`llama-server`. The stack was brought up with a 1 MB GGUF test model: `/health`,
+`/v1/chat/completions` and `/metrics` answered and Prometheus reported the target
+up. Grafana starts empty: no datasource or dashboard is provisioned. Add authentication, TLS,
 resource limits, non-default credentials, persistent dashboards, and network
 policy before exposing it beyond a trusted host.
 

@@ -1,8 +1,8 @@
 services:
   llama-server:
-    # Pinned by tag and digest. Upstream publishes only full-<sha> and light-<sha>
-    # tags, so a floating tag here is not just unreproducible, it does not resolve.
-    image: ghcr.io/ggerganov/llama.cpp:full-1e5a6d088d0f3a967c6e86298a756daec9e8df12@sha256:7195b11d90b4c3258ec0c34256395dffbf4d29c296b586913afa216ef1b0e96b
+    # Pinned by build tag and digest. The server image's entrypoint is llama-server,
+    # so `command` is its argument list. To move to a newer build, change both.
+    image: ghcr.io/ggml-org/llama.cpp:server-b12767@sha256:b24873ae66a4732e0b4b66dd7dc658066ccad6e8c63524278e92eebc767aacbe
     command: >
       -m /models/model.gguf
       --host 0.0.0.0
@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
 
   prometheus:
-    image: prom/prometheus:v3.5.0
+    image: prom/prometheus:v3.5.0@sha256:63805ebb8d2b3920190daf1cb14a60871b16fd38bed42b857a3182bc621f4996
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
@@ -26,7 +26,7 @@ services:
     restart: unless-stopped
 
   grafana:
-    image: grafana/grafana:12.1.1
+    image: grafana/grafana:12.1.1@sha256:a1701c2180249361737a99a01bc770db39381640e4d631825d38ff4535efa47d
     ports:
       - "127.0.0.1:3000:3000"
     environment:

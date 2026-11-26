@@ -68,12 +68,15 @@ is a plan, only decisions already in force.
 ## 7. Images pinned by tag and digest
 
 - **Decided by:** Human, after an external review.
-- **Choice:** every image reference carries a tag and a digest, including
-  `llama.cpp`, pinned to `full-<sha>@sha256:...`.
-- **Why:** the reference was `ghcr.io/ggerganov/llama.cpp:server`, and upstream
-  publishes only `full-<sha>` and `light-<sha>` tags. The file did not merely
-  float, it did not resolve: `docker compose up` could never have worked. A digest
-  makes the demo reproducible and a tag rename a deliberate edit.
+- **Choice:** every image reference carries a tag and a digest. `llama.cpp` is
+  pinned to `ghcr.io/ggml-org/llama.cpp:server-b<build>@sha256:...`.
+- **Why:** the original reference, `ghcr.io/ggerganov/llama.cpp:server`, does not
+  resolve: the images moved to the `ggml-org` namespace. A digest makes the demo
+  reproducible and an upgrade a deliberate edit.
+- **Correction:** the first fix pinned a `full-<sha>` image from the old namespace
+  and stated that upstream publishes no `server` tag. Both were wrong and neither
+  had been run: that image dates from March 2023, predates GGUF and has no
+  `llama-server`. The current pin was chosen by starting the stack and querying it.
 - **Rejected:** `:latest`, and a floating tag with a comment asking operators to
   pin it themselves.
 

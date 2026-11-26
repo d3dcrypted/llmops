@@ -26,6 +26,9 @@ class ExperimentTests(unittest.TestCase):
     def test_rejects_a_plan_that_would_train_everything(self):
         with self.assertRaises(ValueError): LoraPlan("m", rank=0).validate()
         with self.assertRaises(ValueError): LoraPlan("m", target_modules=()).validate()
+        with self.assertRaises(ValueError): LoraPlan("m", rank=1.5).validate()
+        with self.assertRaises(ValueError):
+            adapter_parameters(LoraPlan("m", rank=64, target_modules=("q_proj",)), (("q_proj", 8, 8),))
 
     def test_example_configuration_files_are_valid(self):
         root = Path(__file__).parents[1]

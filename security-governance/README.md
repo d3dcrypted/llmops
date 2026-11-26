@@ -1,6 +1,6 @@
 # LLMOps Security and Governance
 
-A practical control-plane scaffold for safer LLM applications. It treats security as an application boundary: classify inputs, apply policy, redact sensitive values, and retain auditable decisions without storing raw secrets.
+A small input filter for LLM applications, written as a baseline to measure against. It treats security as an application boundary: classify inputs, apply policy, redact sensitive values, and retain auditable decisions without storing raw secrets.
 
 ## Roadmap
 
@@ -17,6 +17,16 @@ A practical control-plane scaffold for safer LLM applications. It treats securit
 ```bash
 python3 -m unittest discover -s tests -v
 ```
+
+## Limits
+
+The injection check is a list of known phrasings in two languages. It catches the
+common wording and misses paraphrase, misspelling and any other language;
+`tests/test_controls.py::test_known_misses` keeps three of those misses on record.
+Treat a match as a signal to log and review, and do not treat a pass as safe input.
+Redaction covers email, checksum-valid IBANs, Italian-shaped phone numbers and a
+few key formats. It over-redacts digit runs that look like phone numbers and does
+not cover card numbers, tax codes or names.
 
 This is not a security certification or a substitute for threat modeling and human review.
 
