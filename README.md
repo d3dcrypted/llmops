@@ -1,6 +1,6 @@
 # LLMOps RAG Pipeline
 
-A small, transparent retrieval-augmented generation reference implementation. The first milestone focuses on deterministic ingestion, chunking, retrieval, citations, and testable interfaces rather than framework abstraction.
+A small, transparent retrieval-augmented generation reference implementation. The first milestone covers deterministic ingestion, chunking, retrieval and citations behind testable interfaces; no framework abstraction yet.
 
 ## Roadmap
 
@@ -23,6 +23,10 @@ python3 -m unittest discover -s tests -v
 ```
 
 The examples are synthetic. Do not place confidential documents, credentials, or production data in this repository.
+
+## Authorship
+
+Human thought, machine hand. The author set the direction, took the decisions and reviewed the result; an AI assistant produced the drafting, the code and the prose in this file. Mistakes are the author's.
 
 ## License
 
