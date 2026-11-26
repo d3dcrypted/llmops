@@ -8,6 +8,14 @@ Nothing in this repository needs a GPU, an API key or a network call to run its
 tests. Every project is deliberately dependency-light, deterministic and
 provider-neutral: interfaces first, adapters later.
 
+## What this is not
+
+These are small demos of the building blocks, not a production stack. No model
+is trained, fine-tuned or evaluated here. The projects are not wired to each
+other: the flow described below is how they would fit, not something this
+repository runs end to end. Only `model-serving` runs a model, and it was
+checked with a 1 MB test model. Each project's README lists its own limits.
+
 ## Needs and gains
 
 | Project | Need it addresses | What you get |
