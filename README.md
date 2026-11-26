@@ -19,3 +19,7 @@ python3 -m unittest discover -s tests -v
 ```
 
 This is not a security certification or a substitute for threat modeling and human review.
+
+## Authorship
+
+Human thought, machine hand. The author set the direction, took the decisions and reviewed the result; an AI assistant produced the drafting, the code and the prose in this file. Mistakes are the author's.
