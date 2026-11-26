@@ -78,6 +78,9 @@ project can break another one's build.
 | `rag-pipeline/` | `llmops-rag-pipeline` |
 | `security-governance/` | `llmops-security-governance` |
 
+The original repositories are archived. They stay readable, and each README
+points here.
+
 ## Authorship
 
 Human thought, machine hand. The author set the direction, took the decisions
