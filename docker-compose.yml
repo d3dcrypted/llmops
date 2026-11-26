@@ -28,7 +28,8 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     environment:
-      GF_SECURITY_ADMIN_PASSWORD: change-me-before-use
+      # No default credential: compose fails loudly if the operator has not set one.
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD in .env}
     volumes:
       - grafana-data:/var/lib/grafana
     restart: unless-stopped

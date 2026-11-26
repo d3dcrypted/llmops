@@ -8,7 +8,8 @@ This repository demonstrates the serving and observability boundary. It is inten
 
 ## Quick start
 
-Review `docker-compose.yml`, set `MODEL_PATH` to a local model directory, then run:
+Review `docker-compose.yml`, set `MODEL_PATH` to a local model directory and
+`GRAFANA_ADMIN_PASSWORD` to a value of your own in `.env`, then run:
 
 ```bash
 docker compose up -d
