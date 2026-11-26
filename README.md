@@ -26,6 +26,10 @@ The intended dashboard tracks time to first token, generation latency, throughpu
 
 The compose file is a local demo, not a production deployment. Add authentication, TLS, resource limits, pinned image digests, non-default credentials, persistent dashboards, and network policy before exposing it beyond a trusted host.
 
+## Authorship
+
+Human thought, machine hand. The author set the direction, took the decisions and reviewed the result; an AI assistant produced the drafting, the code and the prose in this file. Mistakes are the author's.
+
 ## License
 
 MIT
